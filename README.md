@@ -35,8 +35,6 @@ Existem vários tipos de requisições HTTP, mas para esse teste, apenas GET é 
 
 Todo tipo de consulta é permitida e encorajada, a ideia do teste é ser o mais parecido possivel com uma task convencional.
 
-O React não possui nenhum método de requisição HTTP no seu core, alguma library adicional será necessária para fazer o _fetch_ dos dados.
-
 ## Rodando o código
 
 ### `npm start`
