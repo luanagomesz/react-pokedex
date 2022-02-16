@@ -10,6 +10,7 @@ export const PageContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #eeeeee;
+
   @media (max-width: 550px) {
     height: fit-content;
   }
