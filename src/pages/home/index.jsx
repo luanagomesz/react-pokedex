@@ -69,7 +69,12 @@ export const PokemonList = () => {
     <PageContainer>
       <ContainerContent>
         <header>
-          <img src={Logo} alt="" srcset="" onClick={() => ResetPokemons()} />
+          <img
+            src={Logo}
+            alt="PokéDex"
+            srcset=""
+            onClick={() => ResetPokemons()}
+          />
           <div>
             <p className="text">Pesquise seu pokémon!</p>
             <div>
