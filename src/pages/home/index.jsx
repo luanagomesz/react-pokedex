@@ -5,6 +5,7 @@ import { API } from "../../services";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
+import { AiOutlineLinkedin, AiOutlineGithub } from "react-icons/ai";
 import Logo from "../../assets/imgs/logo.svg";
 import axios from "axios";
 export const PokemonList = () => {
@@ -46,7 +47,9 @@ export const PokemonList = () => {
     } else {
       API.get("/pokemon?limit=1118&offset=0").then((res) => {
         setSearch(
-          res.data.results.filter((item) => item.name.includes(userInput))
+          res.data.results.filter((item) =>
+            item.name.toUpperCase().includes(userInput.toUpperCase())
+          )
         );
       });
     }
@@ -150,6 +153,21 @@ export const PokemonList = () => {
           </div>
         </ContainerCards>
       </ContainerContent>
+      <footer>
+        <span>@Luana Gomes</span>
+        <AiOutlineLinkedin
+          onClick={() => {
+            window
+              .open("https://www.linkedin.com/in/luana-gomesz", "_blank")
+              .focus();
+          }}
+        />
+        <AiOutlineGithub
+          onClick={() => {
+            window.open("https://github.com/luanagomesz", "_blank").focus();
+          }}
+        />
+      </footer>
     </PageContainer>
   );
 };

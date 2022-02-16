@@ -2,14 +2,40 @@ import styled from "styled-components";
 
 export const PageContainer = styled.div`
   width: 100vw;
-  max-width: 100%;
   height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: #eeeeee;
   @media (max-width: 550px) {
     height: fit-content;
+  }
+
+  footer {
+    background-color: #eeeeee;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 50px;
+
+    span {
+      font-size: 10px;
+    }
+    svg:first-child {
+      margin-right: 5px;
+      margin-left: 10px;
+    }
+    svg {
+      margin-left: 5px;
+      cursor: pointer;
+      :hover {
+        color: grey;
+      }
+    }
   }
 `;
 
@@ -21,7 +47,7 @@ export const ContainerContent = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #eeeeee;
+  background-color: white;
 
   h1,
   h2,
@@ -99,18 +125,15 @@ export const ContainerContent = styled.main`
       border-top-left-radius: 0px;
       border-top-right-radius: 0px;
       img {
-        margin-left: 5px;
+        margin-left: 10px;
         width: 120px;
       }
       div {
-        margin-right: 5px;
+        margin-right: 10px;
       }
 
       input {
         width: 120px;
-      }
-      .text {
-        display: none;
       }
     }
   }
