@@ -64,13 +64,12 @@ export const PokemonCard = ({ pokemonName }) => {
     }
   };
   return pokemonInfo.length != "" && reload === true ? (
-    <CardContainer onClick={() => setImage()}>
-      <figure>
+    <CardContainer>
+      <figure onClick={() => setImage()}>
         <img
           id={`img${pokemonInfo.id}`}
           src={pokemonInfo.sprites.front_default}
           alt=""
-          srcset=""
         />
       </figure>
 

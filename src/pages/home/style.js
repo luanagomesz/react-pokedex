@@ -231,11 +231,16 @@ export const ContainerCards = styled.div`
 
     .container {
       max-height: 100vh;
-      margin-top: 35px;
+      margin-top: 15px;
     }
     .pages {
-      margin-top: 30px;
+      margin-top: 10px;
       margin-bottom: 0px;
+      div {
+        button {
+          font-size: 30px;
+        }
+      }
     }
   }
 `;
