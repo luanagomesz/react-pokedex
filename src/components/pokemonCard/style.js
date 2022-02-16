@@ -27,7 +27,7 @@ export const CardContainer = styled.div`
     margin: 5px;
     image-rendering: pixelated;
     cursor: pointer;
-    animation-name: Jump;
+
     animation-duration: 500ms;
   }
   span {

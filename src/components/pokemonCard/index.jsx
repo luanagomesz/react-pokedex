@@ -24,35 +24,42 @@ export const PokemonCard = ({ pokemonName }) => {
 
   const setImage = () => {
     let img = document.getElementById(`img${pokemonInfo.id}`);
-    let container = img.parentNode;
 
     if (img.src === pokemonInfo.sprites.front_default) {
       img.src = pokemonInfo.sprites.back_default;
-      container.removeChild(img);
-      container.prepend(img);
-      setShiny(false);
+      img.style.animationName = "Jump";
+      setTimeout(() => {
+        img.style.animationName = "";
+      }, 500);
     } else if (img.src === pokemonInfo.sprites.back_default) {
       if (pokemonInfo.sprites.front_shiny != null) {
         img.src = pokemonInfo.sprites.front_shiny;
-        container.removeChild(img);
-        container.prepend(img);
-        console.log(container.firstChild);
+        img.style.animationName = "Jump";
+        setTimeout(() => {
+          img.style.animationName = "";
+        }, 500);
         setShiny(true);
       } else {
         img.src = pokemonInfo.sprites.front_default;
-        container.removeChild(img);
-        container.prepend(img);
+        img.style.animationName = "Jump";
+        setTimeout(() => {
+          img.style.animationName = "";
+        }, 500);
         setShiny(false);
       }
     } else if (img.src === pokemonInfo.sprites.front_shiny) {
       img.src = pokemonInfo.sprites.back_shiny;
-      container.removeChild(img);
-      container.prepend(img);
+      img.style.animationName = "Jump";
+      setTimeout(() => {
+        img.style.animationName = "";
+      }, 500);
       setShiny(true);
     } else if (img.src === pokemonInfo.sprites.back_shiny) {
       img.src = pokemonInfo.sprites.front_default;
-      container.removeChild(img);
-      container.prepend(img);
+      img.style.animationName = "Jump";
+      setTimeout(() => {
+        img.style.animationName = "";
+      }, 500);
       setShiny(false);
     }
   };
