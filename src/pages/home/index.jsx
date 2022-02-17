@@ -1,13 +1,15 @@
 import { PageContainer, ContainerCards, ContainerContent } from "./style";
 import { PokemonCard } from "../../components/pokemonCard";
 import { ImSearch } from "react-icons/im";
-import { API } from "../../services";
+import { API } from "../../services/api";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GrFormNextLink, GrFormPreviousLink } from "react-icons/gr";
 import { AiOutlineLinkedin, AiOutlineGithub } from "react-icons/ai";
 import Logo from "../../assets/imgs/logo.svg";
-import axios from "axios";
+import useGet from "../../services/useGet";
+import { BsChevronDoubleDown, BsChevronDoubleUp } from "react-icons/bs";
+
 export const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);
   const [filteredPokemons, setSearch] = useState([]);
@@ -16,28 +18,29 @@ export const PokemonList = () => {
   const [pageNav, setPageNav] = useState("");
   const [pageCounter, setPageCounter] = useState(1);
   const [userInput, setUserInput] = useState("");
+  const [url, setUrl] = useState("/pokemon");
+  const [isMounted, setIsMounted] = useState(false);
+  const [defaultShiny, setDefault] = useState(false);
+  const [modalShiny, setModalShiny] = useState(false);
+  const { data } = useGet(url);
+
   useEffect(() => {
-    API.get("/pokemon").then((res) => {
-      setNext(res.data.next);
-      setPrevious(res.data.previous);
-      setPokemons(res.data.results);
-    });
+    setIsMounted(true);
   }, []);
 
   useEffect(() => {
+    if (isMounted === true) {
+      setPokemons(data.results);
+      setNext(data.next);
+      setPrevious(data.previous);
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (pageNav === "next" && next != null) {
-      axios.get(next).then((res) => {
-        setNext(res.data.next);
-        setPrevious(res.data.previous);
-        setPokemons(res.data.results);
-        console.log(res.data.results);
-      });
+      setUrl(next);
     } else if (pageNav === "previous" && previous != null) {
-      axios.get(previous).then((res) => {
-        setNext(res.data.next);
-        setPrevious(res.data.previous);
-        setPokemons(res.data.results);
-      });
+      setUrl(previous);
     }
   }, [pageCounter]);
 
@@ -56,15 +59,21 @@ export const PokemonList = () => {
   };
   const ResetPokemons = () => {
     setSearch([]);
-    API.get("/pokemon").then((res) => {
-      setNext(res.data.next);
-      setPrevious(res.data.previous);
-      setPokemons(res.data.results);
-    });
+    setUrl("/pokemon");
   };
-  useEffect(() => {
-    console.log(filteredPokemons);
-  }, [filteredPokemons]);
+
+  const CloseModal = () => {
+    let modal = document.getElementById("shinybox");
+    modal.style.animationName = "slideoff";
+
+    setTimeout(() => {
+      modal.style.animationName = "slide";
+      setModalShiny(false);
+      let openModal = document.getElementById("openShiny");
+      openModal.style.animationName = "fadeIn";
+    }, 500);
+  };
+
   return (
     <PageContainer>
       <ContainerContent>
@@ -75,6 +84,7 @@ export const PokemonList = () => {
             srcset=""
             onClick={() => ResetPokemons()}
           />
+
           <div>
             <p className="text">Pesquise seu pokémon!</p>
             <div>
@@ -98,6 +108,49 @@ export const PokemonList = () => {
               </button>
             </div>
           </div>
+          {modalShiny === true ? (
+            <div className="shinybox" id="shinybox">
+              <div>
+                <p>Shiny?</p>
+                {defaultShiny === true ? (
+                  <input
+                    id="checkbox"
+                    type="checkbox"
+                    checked
+                    onClick={() =>
+                      defaultShiny === false
+                        ? setDefault(true)
+                        : setDefault(false)
+                    }
+                  ></input>
+                ) : (
+                  <input
+                    id="checkbox"
+                    type="checkbox"
+                    onClick={() =>
+                      defaultShiny === false
+                        ? setDefault(true)
+                        : setDefault(false)
+                    }
+                  ></input>
+                )}
+
+                <BsChevronDoubleUp
+                  onClick={() => {
+                    CloseModal();
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="openShiny" id="openShiny">
+              <BsChevronDoubleDown
+                onClick={(e) => {
+                  setModalShiny(true);
+                }}
+              />
+            </div>
+          )}
         </header>
 
         <ContainerCards>
@@ -150,10 +203,18 @@ export const PokemonList = () => {
           <div className="container">
             {filteredPokemons.length > 0
               ? filteredPokemons.map((poke) => (
-                  <PokemonCard pokemonName={poke.name} />
+                  <PokemonCard
+                    pokemonName={poke.name}
+                    defaultShiny={defaultShiny}
+                  />
                 ))
               : pokemons.length > 0
-              ? pokemons.map((poke) => <PokemonCard pokemonName={poke.name} />)
+              ? pokemons.map((poke) => (
+                  <PokemonCard
+                    pokemonName={poke.name}
+                    defaultShiny={defaultShiny}
+                  />
+                ))
               : ""}
           </div>
         </ContainerCards>

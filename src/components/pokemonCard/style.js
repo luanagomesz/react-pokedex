@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { typeNames } from "./typeslist";
 
 export const CardContainer = styled.div`
   width: 200px;
@@ -88,42 +89,5 @@ export const PokeType = styled.p`
   padding: 3px 10px 3px 10px;
   font-size: 15px;
   border-radius: 5px;
-  background-color: ${(props) =>
-    props.type === "grass"
-      ? "green"
-      : props.type === "poison"
-      ? "purple"
-      : props.type === "fire"
-      ? "red"
-      : props.type === "flying"
-      ? "LightBlue"
-      : props.type === "water"
-      ? "MediumSlateBlue"
-      : props.type === "bug"
-      ? "Olive"
-      : props.type === "normal"
-      ? "grey"
-      : props.type === "rock"
-      ? "#DAA520"
-      : props.type === "ground"
-      ? "#B8860B"
-      : props.type === "psychic"
-      ? "DarkOrchid"
-      : props.type === "electric"
-      ? "#FFD700"
-      : props.type === "steel"
-      ? "LightSteelBlue"
-      : props.type === "ice"
-      ? "LightSkyBlue"
-      : props.type === "ghost"
-      ? "MediumPurple"
-      : props.type === "fairy"
-      ? "Pink"
-      : props.type === "dragon"
-      ? "Maroon"
-      : props.type === "dark"
-      ? "black"
-      : props.type === "fighting"
-      ? "Tan"
-      : "grey"};
+  background-color: ${(props) => typeNames[props.type]};
 `;

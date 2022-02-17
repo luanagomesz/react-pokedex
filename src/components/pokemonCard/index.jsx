@@ -1,26 +1,36 @@
 import { CardContainer, PokeType } from "./style";
-import { API } from "../../services";
+import { API } from "../../services/api";
 import { useState } from "react";
 import { useEffect } from "react";
-export const PokemonCard = ({ pokemonName }) => {
+import useGet from "../../services/useGet";
+export const PokemonCard = ({ pokemonName, defaultShiny }) => {
   const [pokemonInfo, setPokemonInfo] = useState("");
   const [reload, setReload] = useState(true);
+  const [isMounted, setMounted] = useState(false);
   const [isShiny, setShiny] = useState(false);
+  const [url, setUrl] = useState(`/pokemon-form/${pokemonName}`);
+  const { data } = useGet(url);
   useEffect(() => {
-    API.get(`/pokemon-form/${pokemonName}`).then((res) => {
-      setPokemonInfo(res.data);
-    });
+    setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (isMounted === true) {
+      setPokemonInfo(data);
+      setReload(true);
+    }
+  }, [data]);
 
   useEffect(() => {
     setShiny(false);
     setReload(false);
-    API.get(`/pokemon-form/${pokemonName}`).then((res) => {
-      setPokemonInfo(res.data);
-
-      setReload(true);
-    });
+    setUrl(`/pokemon-form/${pokemonName}`);
+    defaultShiny === true ? setShiny(true) : setShiny(false);
   }, [pokemonName]);
+
+  useEffect(() => {
+    defaultShiny === true ? setShiny(true) : setShiny(false);
+  }, [defaultShiny]);
 
   const setImage = () => {
     let img = document.getElementById(`img${pokemonInfo.id}`);
@@ -63,12 +73,16 @@ export const PokemonCard = ({ pokemonName }) => {
       setShiny(false);
     }
   };
-  return pokemonInfo.length != "" && reload === true ? (
+  return pokemonInfo !== "" && reload === true ? (
     <CardContainer>
       <figure onClick={() => setImage()}>
         <img
           id={`img${pokemonInfo.id}`}
-          src={pokemonInfo.sprites.front_default}
+          src={
+            defaultShiny === true
+              ? pokemonInfo.sprites.front_shiny
+              : pokemonInfo.sprites.front_default
+          }
           alt=""
         />
       </figure>
