@@ -69,6 +69,70 @@ export const ContainerContent = styled.main`
     z-index: 2;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    .openShiny {
+      position: absolute;
+      width: 80%;
+      max-width: 837px;
+      margin-top: 120px;
+      margin-bottom: 20px;
+      animation-fill-mode: forwards;
+      animation-duration: 500ms;
+      svg {
+        background-color: tomato;
+        font-size: 25px;
+        color: white;
+        padding: 5px 10px 2px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+    .shinybox {
+      position: absolute;
+      width: 80%;
+      max-width: 837px;
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-top: 120px;
+      animation-name: slide;
+      animation-duration: 500ms;
+      z-index: -2;
+
+      div {
+        margin-right: 0px;
+        width: 30%;
+        background-color: tomato;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        z-index: -2;
+        max-width: 200px;
+        p {
+          opacity: 0;
+          margin-bottom: 0px;
+          animation-name: fadeIn;
+          animation-duration: 1s;
+          animation-fill-mode: forwards;
+        }
+        input {
+          opacity: 0;
+          animation-name: fadeIn;
+          animation-duration: 1s;
+          animation-fill-mode: forwards;
+        }
+        svg {
+          position: absolute;
+          margin-top: 30px;
+          color: white;
+          background-color: tomato;
+          padding: 5px;
+          padding-bottom: 0px;
+          border-radius: 5px;
+          z-index: -2;
+        }
+      }
+    }
     img {
       width: 180px;
       cursor: pointer;
@@ -87,6 +151,7 @@ export const ContainerContent = styled.main`
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
         button {
           border: none;
           background-color: yellow;
@@ -119,6 +184,29 @@ export const ContainerContent = styled.main`
     }
   }
 
+  @keyframes slideoff {
+    0% {
+      margin-top: 120px;
+      color: tomato;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      margin-top: 10px;
+      opacity: 0;
+    }
+  }
+  @keyframes slide {
+    0% {
+      margin-top: 10px;
+      color: tomato;
+    }
+
+    100% {
+      margin-top: 120px;
+    }
+  }
   @media (max-width: 550px) {
     header {
       width: 100%;
@@ -135,6 +223,22 @@ export const ContainerContent = styled.main`
 
       input {
         width: 120px;
+      }
+      .shinybox {
+        width: 100%;
+
+        div {
+          width: 25%;
+          min-width: 117px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+          input {
+            width: 15px;
+          }
+        }
+      }
+      .openShiny {
+        width: 100%;
       }
     }
   }
@@ -153,6 +257,7 @@ export const ContainerCards = styled.div`
   background-color: white;
   max-width: 837px;
   box-shadow: 0px 0px 20px 2px lightgray;
+
   .pages {
     width: 100%;
     max-width: 837px;
@@ -164,6 +269,7 @@ export const ContainerCards = styled.div`
     max-height: 50px;
     margin-top: 30px;
     margin-bottom: 30px;
+
     .voltar {
       display: flex;
       button:first-child {
@@ -237,7 +343,13 @@ export const ContainerCards = styled.div`
     .pages {
       margin-top: 10px;
       margin-bottom: 0px;
+      p {
+        display: none;
+      }
       div {
+        button:first-child {
+          font-size: 30px;
+        }
         button {
           font-size: 30px;
         }
