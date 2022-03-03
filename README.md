@@ -1,4 +1,4 @@
-# PokeLister J1 - Junior Dev Test #1 Rev 0.3
+# PokeDex
 ## Deploy:
 
 react-pokemon-api-challenge.vercel.app
